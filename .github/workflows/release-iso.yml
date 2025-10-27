@@ -48,11 +48,15 @@ jobs:
           IMAGE_FULL="${IMAGE_REGISTRY}/${RECIPE_NAME}:latest"
           ISO_NAME="${RECIPE_NAME}-${{ matrix.variant }}-$(date +%Y%m%d).iso"
 
+          # Create output directory
+          mkdir -p ./iso-output
+
           # Generate ISO from the image we built and pushed
-          sudo bluebuild generate-iso image "${IMAGE_FULL}" \
+          sudo bluebuild generate-iso \
             --output-dir ./iso-output \
             --variant ${{ matrix.variant }} \
-            --iso-name "${ISO_NAME}"
+            --iso-name "${ISO_NAME}" \
+            image "${IMAGE_FULL}"
 
           # Save ISO name for upload step
           echo "iso_name=${ISO_NAME}" >> $GITHUB_OUTPUT
