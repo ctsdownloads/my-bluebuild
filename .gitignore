@@ -1,0 +1,42 @@
+# BlueBuild outputs
+*.tar
+*.oci-archive
+iso-output/
+build/
+.tmp/
+
+# Signing keys - NEVER commit these!
+cosign.key
+*.pem
+*.der
+*.p12
+signing_secret*
+
+# Container build artifacts
+Containerfile
+Containerfile.*
+.containerfile
+
+# Temporary files
+*.tmp
+*.log
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+.Trash-*
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Local environment
+.env
+.env.local
+
+# Claude Code
+.claude/settings.local.json

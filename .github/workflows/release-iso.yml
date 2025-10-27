@@ -1,0 +1,83 @@
+name: Generate ISO
+on:
+  workflow_dispatch: # Allow manual triggering
+  push:
+    tags:
+      - 'v*' # Trigger on version tags like v1.0, v2.1, etc.
+
+env:
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  release-iso:
+    name: Generate and Release ISO
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: read
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - myimage.yml
+        # You can generate ISOs for multiple variants
+        variant:
+          - kinoite  # User setup before install (most stable)
+          # - silverblue  # User setup after first boot
+          # - server  # Basic server installer
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Image Name
+        id: image-name
+        run: |
+          RECIPE_NAME=$(echo "${{ matrix.recipe }}" | sed 's/\.yml$//')
+          echo "recipe_name=${RECIPE_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Install BlueBuild CLI
+        run: |
+          sudo docker create --name blue-build-installer ghcr.io/blue-build/cli:v0.9-installer
+          sudo docker cp blue-build-installer:/out/bluebuild /usr/bin/bluebuild
+          sudo docker rm blue-build-installer
+          bluebuild --version
+
+      - name: Generate ISO
+        run: |
+          RECIPE_NAME="${{ steps.image-name.outputs.recipe_name }}"
+          IMAGE_FULL="${IMAGE_REGISTRY}/${RECIPE_NAME}:latest"
+          ISO_NAME="${RECIPE_NAME}-${{ matrix.variant }}-$(date +%Y%m%d).iso"
+
+          # Generate ISO from the image we built and pushed
+          sudo bluebuild generate-iso image "${IMAGE_FULL}" \
+            --output-dir ./iso-output \
+            --variant ${{ matrix.variant }} \
+            --iso-name "${ISO_NAME}"
+
+          # Save ISO name for upload step
+          echo "iso_name=${ISO_NAME}" >> $GITHUB_OUTPUT
+          echo "iso_path=./iso-output/${ISO_NAME}" >> $GITHUB_OUTPUT
+        id: generate-iso
+
+      - name: Generate Checksum
+        run: |
+          cd ./iso-output
+          sha256sum "${{ steps.generate-iso.outputs.iso_name }}" > "${{ steps.generate-iso.outputs.iso_name }}.sha256sum"
+
+      - name: Upload ISO to Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            ./iso-output/${{ steps.generate-iso.outputs.iso_name }}
+            ./iso-output/${{ steps.generate-iso.outputs.iso_name }}.sha256sum
+
+      - name: Upload ISO as Artifact (for manual runs)
+        uses: actions/upload-artifact@v4
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          name: ${{ steps.generate-iso.outputs.iso_name }}
+          path: |
+            ./iso-output/${{ steps.generate-iso.outputs.iso_name }}
+            ./iso-output/${{ steps.generate-iso.outputs.iso_name }}.sha256sum
+          retention-days: 7

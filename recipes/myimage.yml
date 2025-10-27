@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: myimage
+description: Custom Fedora Atomic Desktop with BlueBuild
+
+# Base image - using Fedora Silverblue 42
+base-image: ghcr.io/ublue-os/silverblue-main
+image-version: 42
+
+# Modules for customization
+modules:
+  # Copy any custom files
+  - type: files
+    files:
+      - source: system
+        destination: /
+
+  # Install additional packages via DNF
+  - type: dnf
+    repos:
+      # Add COPR repos if needed
+      copr:
+        - atim/starship  # Better shell prompt
+    install:
+      packages:
+        - micro          # Modern terminal editor
+        - starship       # Cross-shell prompt
+        - htop           # Process viewer
+        - vim            # Text editor
+    remove:
+      packages:
+        # Remove Firefox to install Flatpak version
+        - firefox
+        - firefox-langpacks
+
+  # Install Flatpak applications
+  - type: default-flatpaks
+    configurations:
+      - notify: true
+        scope: system
+        install:
+          - org.mozilla.firefox           # Firefox browser
+          - org.gnome.Loupe                # Image viewer
+          - org.gnome.Calculator           # Calculator
+          - org.gnome.TextEditor           # Text editor
+      - scope: user  # Enable Flathub for users
+
+  # Setup image signing (required for secure updates)
+  - type: signing

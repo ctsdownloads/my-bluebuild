@@ -1,0 +1,12 @@
+# Custom bashrc additions for BlueBuild image
+# This file demonstrates the 'files' module
+
+# Enable starship prompt if installed
+if command -v starship &> /dev/null; then
+    eval "$(starship init bash)"
+fi
+
+# Helpful aliases
+alias ll='ls -lah'
+alias update='rpm-ostree update'
+alias status='rpm-ostree status'
