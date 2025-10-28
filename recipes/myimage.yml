@@ -30,3 +30,5 @@ modules:
     files:
       - source: usr/etc/os-release
         destination: /etc/os-release
+      - source: etc/hostname
+        destination: /etc/hostname
