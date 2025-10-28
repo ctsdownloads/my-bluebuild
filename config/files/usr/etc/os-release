@@ -1,0 +1,12 @@
+NAME="ClarityOS"
+VERSION="42"
+ID=clarityos
+VERSION_ID=42
+PRETTY_NAME="ClarityOS 42 (COSMIC)"
+ANSI_COLOR="0;38;2;60;110;180"
+LOGO=fedora-logo-icon
+CPE_NAME="cpe:/o:fedoraproject:fedora:42"
+HOME_URL="https://github.com/ctsdownloads/my-bluebuild"
+DOCUMENTATION_URL="https://github.com/ctsdownloads/my-bluebuild"
+SUPPORT_URL="https://github.com/ctsdownloads/my-bluebuild"
+BUG_REPORT_URL="https://github.com/ctsdownloads/my-bluebuild/issues"

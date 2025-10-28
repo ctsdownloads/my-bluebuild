@@ -27,3 +27,7 @@ modules:
         - org.gnome.Papers
         - org.gnome.baobab
         - org.gnome.FileRoller
+
+  - type: files
+    files:
+      - usr: etc/os-release
