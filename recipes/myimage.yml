@@ -1,25 +1,11 @@
 name: clarityos
 description: ClarityOS - Custom Fedora Atomic with COSMIC Desktop
-base-image: ghcr.io/ublue-os/base-main
+base-image: ghcr.io/fedoraproject/fedora-cosmic-atomic
 image-version: 42
 
 modules:
   - type: rpm-ostree
     install:
-      # COSMIC Desktop Environment
-      - cosmic-desktop
-      - cosmic-session
-      - cosmic-greeter
-      - cosmic-comp
-      - cosmic-applets
-      - cosmic-launcher
-      - cosmic-panel
-      - cosmic-settings
-      - cosmic-files
-      - cosmic-term
-      - cosmic-edit
-      
-      # Your custom packages
       - micro
       - htop
       - vim
@@ -40,19 +26,3 @@ modules:
         - org.gnome.Papers
         - org.gnome.baobab
         - org.gnome.FileRoller
-      
-      remove:
-        - cosmic-store
-  
-  - type: script
-    scripts:
-      - |
-        echo "cosmic-session" > /etc/sysconfig/desktop
-        mkdir -p /etc/skel/.config/cosmic
-        cat > /etc/skel/.config/cosmic/dock.ron << 'INNEREOF'
-        (
-          favorites: [
-            "io.github.kolunmi.Bazaar.desktop",
-          ]
-        )
-        INNEREOF
