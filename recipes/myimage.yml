@@ -1,8 +1,6 @@
 name: clarityos
 description: ClarityOS - Custom Fedora Atomic with COSMIC Desktop
-
 base-image: ghcr.io/ublue-os/base-main:gts
-image-version: gts
 
 modules:
   # Install COSMIC desktop from Fedora repos
@@ -34,7 +32,7 @@ modules:
       - gnome-shell
       - gnome-software
       - gdm
-
+  
   # Flatpak applications
   - type: default-flatpaks
     notify: true
@@ -60,7 +58,7 @@ modules:
       remove:
         # Remove COSMIC's software store (we're using Bazaar instead)
         - cosmic-store
-
+  
   # Configure COSMIC desktop settings
   - type: script
     scripts:
