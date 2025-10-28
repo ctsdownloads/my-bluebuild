@@ -1,9 +1,7 @@
 name: clarity-os
 description: ClarityOS - Custom Fedora Atomic with COSMIC Desktop
-
 base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
 image-version: 42
-
 modules:
   - type: rpm-ostree
     install:
@@ -27,7 +25,7 @@ modules:
         - org.gnome.Papers
         - org.gnome.baobab
         - org.gnome.FileRoller
-
   - type: files
     files:
-      - usr: etc/os-release
+      - source: usr/etc/os-release
+        destination: /usr/etc/os-release
