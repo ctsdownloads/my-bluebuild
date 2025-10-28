@@ -1,4 +1,4 @@
-name: clarityos
+name: clarity-os
 description: ClarityOS - Custom Fedora Atomic with COSMIC Desktop
 
 base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
