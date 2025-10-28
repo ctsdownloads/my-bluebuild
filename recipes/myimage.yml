@@ -14,7 +14,7 @@ modules:
       - git
       - tmux
   
-  - type: default-flatpaks
+  - type: default-flatpaks@v1
     notify: true
     system:
       install:
@@ -27,5 +27,3 @@ modules:
         - org.gnome.Papers
         - org.gnome.baobab
         - org.gnome.FileRoller
-      remove:
-        - cosmic-store
