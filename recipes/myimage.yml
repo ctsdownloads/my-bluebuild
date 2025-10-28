@@ -25,7 +25,8 @@ modules:
         - org.gnome.Papers
         - org.gnome.baobab
         - org.gnome.FileRoller
+  
   - type: files
     files:
       - source: usr/etc/os-release
-        destination: /usr/etc/os-release
+        destination: /etc/os-release
