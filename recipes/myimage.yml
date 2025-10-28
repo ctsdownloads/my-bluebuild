@@ -36,7 +36,9 @@ modules:
         destination: /etc/os-release
       - source: etc/hostname
         destination: /etc/hostname
-      - source: usr/share/backgrounds/clarityos
-        destination: /usr/share/backgrounds/clarityos
-      - source: usr/share/plymouth/themes/spinner/watermark.png
-        destination: /usr/share/plymouth/themes/spinner/watermark.png
+      - source: usr/share/backgrounds/cosmic
+        destination: /usr/share/backgrounds/cosmic
+      - source: usr/share/pixmaps/system-logo-white.png
+        destination: /usr/share/pixmaps/system-logo-white.png
+      - source: usr/share/pixmaps/fedora-logos
+        destination: /usr/share/pixmaps/fedora-logos
