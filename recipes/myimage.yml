@@ -1,13 +1,12 @@
 name: clarityos
 description: ClarityOS - Custom Fedora Atomic with COSMIC Desktop
 base-image: ghcr.io/ublue-os/base-main
-image-version: gts
+image-version: 42
 
 modules:
-  # Install COSMIC desktop from Fedora repos
   - type: rpm-ostree
     install:
-      # COSMIC Desktop Environment (from Fedora repos)
+      # COSMIC Desktop Environment
       - cosmic-desktop
       - cosmic-session
       - cosmic-greeter
@@ -22,52 +21,38 @@ modules:
       
       # Your custom packages
       - micro
-      - starship
       - htop
       - vim
       - neovim
       - git
       - tmux
   
-  # Flatpak applications
   - type: default-flatpaks
     notify: true
     system:
       install:
-        # Core System Tools - Essential for managing Flatpaks
-        - io.github.kolunmi.Bazaar           # Flatpak app store (browse & install apps)
-        - io.github.flattool.Warehouse       # Flatpak manager (manage installed apps)
-        - com.github.tchx84.Flatseal         # Flatpak permissions manager (control app access)
-        
-        # Office & Productivity
-        - org.libreoffice.LibreOffice        # Office suite (documents, spreadsheets, presentations)
-        
-        # Media Players & Viewers
-        - io.github.celluloid_player.Celluloid  # Video player (simple, powerful)
-        - org.gnome.Loupe                    # Image viewer (fast, modern)
-        - org.gnome.Papers                   # PDF viewer (read PDFs)
-        
-        # File Management & System Utilities
-        - org.gnome.baobab                   # Disk usage analyzer (see what's using space)
-        - org.gnome.FileRoller               # Archive manager (open zip/tar files)
+        - io.github.kolunmi.Bazaar
+        - io.github.flattool.Warehouse
+        - com.github.tchx84.Flatseal
+        - org.libreoffice.LibreOffice
+        - io.github.celluloid_player.Celluloid
+        - org.gnome.Loupe
+        - org.gnome.Papers
+        - org.gnome.baobab
+        - org.gnome.FileRoller
       
       remove:
-        # Remove COSMIC's software store (we're using Bazaar instead)
         - cosmic-store
   
-  # Configure COSMIC desktop settings
   - type: script
     scripts:
       - |
-        # Set COSMIC as default session
         echo "cosmic-session" > /etc/sysconfig/desktop
-        
-        # Pin Bazaar to COSMIC dock (replace software store)
         mkdir -p /etc/skel/.config/cosmic
-        cat > /etc/skel/.config/cosmic/dock.ron << 'EOF'
+        cat > /etc/skel/.config/cosmic/dock.ron << 'INNEREOF'
         (
           favorites: [
             "io.github.kolunmi.Bazaar.desktop",
           ]
         )
-        EOF
+        INNEREOF
