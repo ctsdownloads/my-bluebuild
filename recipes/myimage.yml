@@ -28,11 +28,6 @@ modules:
       - neovim
       - git
       - tmux
-    remove:
-      # Remove any GNOME components if present
-      - gnome-shell
-      - gnome-software
-      - gdm
   
   # Flatpak applications
   - type: default-flatpaks
