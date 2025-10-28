@@ -1,6 +1,7 @@
 name: clarityos
 description: ClarityOS - Custom Fedora Atomic with COSMIC Desktop
-base-image: ghcr.io/ublue-os/base-main:gts
+base-image: ghcr.io/ublue-os/base-main
+image-version: gts
 
 modules:
   # Install COSMIC desktop from Fedora repos
