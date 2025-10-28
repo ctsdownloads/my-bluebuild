@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<wallpapers>
+  <wallpaper deleted="false">
+    <name>ClarityOS Default</name>
+    <filename>/usr/share/backgrounds/clarityos/default.jxl</filename>
+    <options>zoom</options>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>ClarityOS Dark</name>
+    <filename>/usr/share/backgrounds/clarityos/default-dark.jxl</filename>
+    <options>zoom</options>
+  </wallpaper>
+</wallpapers>
