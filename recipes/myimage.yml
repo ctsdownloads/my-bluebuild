@@ -1,7 +1,7 @@
 name: clarity-os
 description: ClarityOS - Fedora COSMIC with Universal Blue enhancements
 base-image: ghcr.io/ublue-os/base-main:latest
-image-version: 42
+image-version: latest
 modules:
   - type: rpm-ostree
     install:
