@@ -1,11 +1,17 @@
 name: clarity-os
-description: ClarityOS - Fedora COSMIC with Universal Blue enhancements
+description: ClarityOS - Universal Blue with Fedora COSMIC Desktop
 base-image: ghcr.io/ublue-os/base-main
 image-version: gts
 modules:
   - type: rpm-ostree
+    repos:
+      # Fedora 43 repos for COSMIC packages
+      - https://download.fedoraproject.org/pub/fedora/linux/releases/43/Everything/x86_64/os/
     install:
-      - "@cosmic-desktop-environment"
+      # Wildcard install all COSMIC packages
+      - "cosmic-*"
+      
+      # Your additional tools
       - micro
       - htop
       - vim
