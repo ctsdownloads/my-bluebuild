@@ -11,11 +11,9 @@ on:
       - "**.txt"
   pull_request:
   workflow_dispatch: # Allow manual triggering
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
   cancel-in-progress: true
-
 jobs:
   bluebuild:
     name: Build Custom Image
@@ -38,3 +36,4 @@ jobs:
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
+          image_tag: gts
