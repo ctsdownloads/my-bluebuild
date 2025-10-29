@@ -1,10 +1,11 @@
 name: clarity-os
-description: ClarityOS - Custom Fedora Atomic with COSMIC Desktop
-base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
+description: ClarityOS - Fedora COSMIC with Universal Blue enhancements
+base-image: ghcr.io/ublue-os/base-main:latest
 image-version: 42
 modules:
   - type: rpm-ostree
     install:
+      - "@cosmic-desktop-environment"
       - micro
       - htop
       - vim
