@@ -72,7 +72,5 @@ modules:
         destination: /usr/share/backgrounds/default-dark.jxl
       - source: usr/share/plymouth/themes/spinner/watermark.png
         destination: /usr/share/plymouth/themes/spinner/watermark.png
-  
-  - type: script
-    scripts:
-      - plymouth-rebuild.sh
+      - source: usr/share/plymouth/plymouthd.defaults
+        destination: /usr/share/plymouth/plymouthd.defaults
