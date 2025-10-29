@@ -7,7 +7,7 @@ modules:
     repos:
       - https://download.fedoraproject.org/pub/fedora/linux/releases/43/Everything/x86_64/os/
     install:
-      # Explicit list instead of wildcard
+      # Explicit COSMIC packages
       - cosmic-app-library
       - cosmic-applets
       - cosmic-bg
@@ -32,6 +32,7 @@ modules:
       - cosmic-term
       - cosmic-wallpapers
       - cosmic-workspaces
+      # Additional tools
       - micro
       - htop
       - vim
@@ -71,3 +72,7 @@ modules:
         destination: /usr/share/backgrounds/default-dark.jxl
       - source: usr/share/plymouth/themes/spinner/watermark.png
         destination: /usr/share/plymouth/themes/spinner/watermark.png
+  
+  - type: script
+    scripts:
+      - plymouth-rebuild.sh
