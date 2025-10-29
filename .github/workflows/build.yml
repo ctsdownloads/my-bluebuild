@@ -1,16 +1,16 @@
 name: Build Custom OS Image
 on:
   schedule:
-    # Build daily at 06:00 UTC (20 minutes after UBlue images start building)
     - cron: "00 06 * * *"
   push:
     branches:
       - main
+      - Testing
     paths-ignore:
       - "**.md"
       - "**.txt"
   pull_request:
-  workflow_dispatch: # Allow manual triggering
+  workflow_dispatch:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
   cancel-in-progress: true
@@ -36,4 +36,4 @@ jobs:
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
-          image_tag: gts
+          image_tag: testing
