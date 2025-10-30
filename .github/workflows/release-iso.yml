@@ -22,9 +22,7 @@ jobs:
           - myimage.yml
         # You can generate ISOs for multiple variants
         variant:
-          - kinoite  # User setup before install (most stable)
-          # - silverblue  # User setup after first boot
-          # - server  # Basic server installer
+          - clarityos
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
