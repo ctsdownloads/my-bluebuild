@@ -20,12 +20,6 @@ jobs:
       matrix:
         recipe:
           - myimage.yml
-        # You can generate ISOs for multiple variants
-        variant:
-          - silverblue
-          # - kinoite  # User setup before install (most stable)
-          # - silverblue  # User setup after first boot
-          # - server  # Basic server installer
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -33,7 +27,8 @@ jobs:
       - name: Set Image Name
         id: image-name
         run: |
-          RECIPE_NAME=$(echo "${{ matrix.recipe }}" | sed 's/\.yml$//')
+          # Extract the actual image name from the recipe file
+          RECIPE_NAME=$(yq eval '.name' ${{ matrix.recipe }})
           echo "recipe_name=${RECIPE_NAME}" >> $GITHUB_OUTPUT
 
       - name: Install BlueBuild CLI
@@ -47,15 +42,14 @@ jobs:
         run: |
           RECIPE_NAME="${{ steps.image-name.outputs.recipe_name }}"
           IMAGE_FULL="${IMAGE_REGISTRY}/${RECIPE_NAME}:latest"
-          ISO_NAME="${RECIPE_NAME}-${{ matrix.variant }}-$(date +%Y%m%d).iso"
+          ISO_NAME="${RECIPE_NAME}-$(date +%Y%m%d).iso"
 
           # Create output directory
           mkdir -p ./iso-output
 
-          # Generate ISO from the image we built and pushed
+          # Generate live ISO from our custom image
           sudo bluebuild generate-iso \
             --output-dir ./iso-output \
-            --variant ${{ matrix.variant }} \
             --iso-name "${ISO_NAME}" \
             image "${IMAGE_FULL}"
 
